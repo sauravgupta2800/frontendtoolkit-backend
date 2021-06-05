@@ -18,6 +18,7 @@
     "url": "git+https://github.com/sauravgupta2800/frontendtoolkit-backend.git"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
