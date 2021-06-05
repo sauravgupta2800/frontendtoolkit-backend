@@ -1,8 +1,8 @@
 const axios = require("axios");
 const config = require("../utils/config");
-const packagelistRouter = require("express").Router();
+const packagesRouter = require("express").Router();
 
-packagelistRouter.get("/", async (request, response) => {
+packagesRouter.get("/", async (request, response) => {
   const { PACKAGE_LIST_API } = config;
   const { q } = request.query;
   if (!q) response.status(400).send({ message: "Search key is required" });
@@ -16,4 +16,4 @@ packagelistRouter.get("/", async (request, response) => {
     });
 });
 
-module.exports = packagelistRouter;
+module.exports = packagesRouter;
