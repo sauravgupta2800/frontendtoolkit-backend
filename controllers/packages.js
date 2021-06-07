@@ -4,6 +4,7 @@ const {
   PACKAGE_SIZE_DETAILS_API,
   PACKAGE_HISTORY_DETAILS_API,
   SIMILAR_PACKAGES_DETAILS_API,
+  PACKAGE_REPOS_API,
 } = require("../utils/config");
 
 const packagesRouter = require("express").Router();
@@ -54,18 +55,42 @@ packagesRouter.get("/package-history", async (request, response) => {
 });
 
 packagesRouter.get("/similar-packages", async (request, response) => {
-  const { package } = request.query;
-  if (!package)
+  const { packages } = request.query;
+  if (!packages)
     response.status(400).send({ message: "package key is required" });
+  // const url = "https://api.npmtrends.com/s/related_packages?search_query%5B%5D=vue&search_query%5B%5D=react&search_query%5B%5D=%40angular%2Fcore";
+  // const url = `${SIMILAR_PACKAGES_DETAILS_API}?${"search_query%5B%5D=vue&search_query%5B%5D=react&search_query%5B%5D=%40angular%2Fcore"}`;
+  const url = `${SIMILAR_PACKAGES_DETAILS_API}?${packages}`;
   axios
-    .get(`${SIMILAR_PACKAGES_DETAILS_API}`, { params: request.query })
+    .get(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    .then(({ data }) => {
+      response.send({ data: data });
+    })
+    .catch((e) => {
+      response
+        .status(400)
+        .send({ message: "Error while fetching similar packages" });
+    });
+});
+
+packagesRouter.get("/repos", async (request, response) => {
+  // api.github.com/repos/vuejs/vue
+  const { path } = request.query;
+  if (!path) response.status(400).send({ message: "path is required" });
+  axios
+    .get(`${PACKAGE_REPOS_API}/${path}`, { params: request.query })
     .then(({ data }) => {
       response.send({ data: data });
     })
     .catch(() => {
       response
         .status(400)
-        .send({ message: "Error while fetching similar packages" });
+        .send({ message: "Error while fetching repository data from github" });
     });
 });
 
