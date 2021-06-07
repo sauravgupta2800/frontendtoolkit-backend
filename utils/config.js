@@ -12,6 +12,8 @@ const SIMILAR_PACKAGES_DETAILS_API =
   "https://api.npmtrends.com/s/related_packages";
 
 const PACKAGE_REPOS_API = "https://api.github.com/repos";
+const PACKAGE_DOWNLOADS_API = " https://api.npmjs.org/downloads";
+
 const PORT = process.env.PORT;
 
 module.exports = {
@@ -21,4 +23,5 @@ module.exports = {
   PACKAGE_HISTORY_DETAILS_API,
   SIMILAR_PACKAGES_DETAILS_API,
   PACKAGE_REPOS_API,
+  PACKAGE_DOWNLOADS_API,
 };

@@ -5,6 +5,7 @@ const {
   PACKAGE_HISTORY_DETAILS_API,
   SIMILAR_PACKAGES_DETAILS_API,
   PACKAGE_REPOS_API,
+  PACKAGE_DOWNLOADS_API,
 } = require("../utils/config");
 
 const packagesRouter = require("express").Router();
@@ -78,8 +79,8 @@ packagesRouter.get("/similar-packages", async (request, response) => {
     });
 });
 
+// api.github.com/repos/vuejs/vue
 packagesRouter.get("/repos", async (request, response) => {
-  // api.github.com/repos/vuejs/vue
   const { path } = request.query;
   if (!path) response.status(400).send({ message: "path is required" });
   axios
@@ -91,6 +92,30 @@ packagesRouter.get("/repos", async (request, response) => {
       response
         .status(400)
         .send({ message: "Error while fetching repository data from github" });
+    });
+});
+
+// https://github.com/npm/registry/blob/master/docs/download-counts.md
+/**
+ * params
+ * type : point | range { point = /downloads/point/ & range = /downloads/range}
+ * period : last-day | last-week | last-month | (startDate:endDate)
+ * package : valid package name
+ */
+packagesRouter.get("/downloads", async (request, response) => {
+  const { type = "range", period, package } = request.query;
+  if (!period) response.status(400).send({ message: "period key is required" });
+  if (!package)
+    response.status(400).send({ message: "package key is required" });
+  axios
+    .get(`${PACKAGE_DOWNLOADS_API}/${type}/${period}/${package}`)
+    .then(({ data }) => {
+      response.send({ data: data });
+    })
+    .catch(() => {
+      response
+        .status(400)
+        .send({ message: "Error while fetching download data" });
     });
 });
 
