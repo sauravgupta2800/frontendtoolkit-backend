@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 
 const packagesRouter = require("./controllers/packages");
+const iconsRouter = require("./controllers/icons");
 
 app.use(cors());
 app.use(express.static("build"));
@@ -18,6 +19,7 @@ app.use(
 app.use(express.json());
 
 app.use("/api/packages", packagesRouter);
+app.use("/api/icons", iconsRouter);
 
 // handler of requests with unknown endpoint
 app.use(middleware.unknownEndpoint);
