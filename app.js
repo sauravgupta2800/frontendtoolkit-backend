@@ -7,6 +7,7 @@ const app = express();
 
 const packagesRouter = require("./controllers/packages");
 const iconsRouter = require("./controllers/icons");
+const minifyRouter = require("./controllers/minify");
 
 app.use(cors());
 app.use(express.static("build"));
@@ -20,7 +21,7 @@ app.use(express.json());
 
 app.use("/api/packages", packagesRouter);
 app.use("/api/icons", iconsRouter);
-
+app.use("/api/minify", minifyRouter);
 // handler of requests with unknown endpoint
 app.use(middleware.unknownEndpoint);
 // handler of requests with result to errors
