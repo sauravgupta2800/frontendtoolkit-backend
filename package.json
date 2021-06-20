@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "clean-css": "^5.1.2",
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
