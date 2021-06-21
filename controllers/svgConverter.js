@@ -1,4 +1,18 @@
 const svgConverterRouter = require("express").Router();
+const { optimize } = require("svgo");
+
+svgConverterRouter.post("/optimize", async (request, response) => {
+  const { svg, config = {} } = request.body;
+  if (!svg) response.status(400).send({ message: "svg is required" });
+  if (!config.plugins)
+    response.status(400).send({ message: "plugins is required" });
+  try {
+    const result = optimize(svg, { ...config });
+    response.send({ data: result.data });
+  } catch {
+    //
+  }
+});
 
 svgConverterRouter.get("/config-list", async (request, response) => {
   const options = [
