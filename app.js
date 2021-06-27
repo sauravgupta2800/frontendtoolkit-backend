@@ -19,7 +19,7 @@ app.use(
   )
 );
 app.use(express.json());
-
+app.use(express.static("build"));
 app.use("/api/packages", packagesRouter);
 app.use("/api/icons", iconsRouter);
 app.use("/api/minify", minifyRouter);

@@ -14,7 +14,7 @@ const SIMILAR_PACKAGES_DETAILS_API =
 const PACKAGE_REPOS_API = "https://api.github.com/repos";
 const PACKAGE_DOWNLOADS_API = " https://api.npmjs.org/downloads";
 const ICONS_API = "https://cdn.jsdelivr.net/npm/css.gg/icons/all.json";
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 
 module.exports = {
   PORT,
